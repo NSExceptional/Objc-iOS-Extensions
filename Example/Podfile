@@ -1,0 +1,8 @@
+source 'https://github.com/CocoaPods/Specs.git'
+
+
+target 'Objc-iOS-Extensions_Tests', :exclusive => true do
+  pod 'Objc-iOS-Extensions', :path => '../'
+  pod 'Objc-Foundation-Extensions'
+  
+end
