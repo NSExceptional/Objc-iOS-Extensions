@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "NSIndexPath+Util.h"
 
 @class TBTableUpdate;
 
