@@ -9,6 +9,8 @@
 #import "UIImage+Util.h"
 #import "CGRect+Util.h"
 @import AssetsLibrary;
+@import Photos;
+
 
 @implementation UIImage (Util)
 
@@ -82,11 +84,20 @@
 }
 
 - (void)saveToLibrary:(void (^)(NSError *error))completion {
-    ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+#if __has_include(<Photos/PHPhotoLibrary.h>)
+    PHPhotoLibrary *library = [PHPhotoLibrary sharedPhotoLibrary];
+    [library performChanges:^{
+        [PHAssetCreationRequest creationRequestForAssetFromImage:self];
+    } completionHandler:^(BOOL success, NSError * _Nullable error) {
+        completion(success ? nil : error);
+    }];
+#else
+    ALAssetsLibrary *library = [ALAssetsLibrary new];
     
     [library writeImageToSavedPhotosAlbum:self.CGImage orientation:(ALAssetOrientation)self.imageOrientation completionBlock:^(NSURL *assetURL, NSError *error) {
         if (completion) completion(error);
-     }];
+    }];
+#endif
 }
 
 @end

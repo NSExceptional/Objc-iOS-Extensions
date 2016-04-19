@@ -30,6 +30,8 @@ typedef NS_ENUM(NSUInteger, CGFramePart) {
 - (void)setCenterX:(CGFloat)xpos;
 - (void)setCenterY:(CGFloat)ypos;
 
+- (void)centerWithinView:(UIView *)view;
+
 - (void)centerYInView:(UIView *)view alignToLeftWithPadding:(CGFloat)padding;
 - (void)centerYInView:(UIView *)view alignToRightWithPadding:(CGFloat)padding;
 

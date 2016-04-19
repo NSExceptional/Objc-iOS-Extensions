@@ -80,6 +80,14 @@
     self.center = p;
 }
 
+- (void)centerWithinView:(UIView *)view {
+    CGRect s  = view.frame;
+    CGPoint p = self.center;
+    p.x = s.size.width/2.f;
+    p.y = s.size.height/2.f;
+    self.center = p;
+}
+
 - (void)centerYInView:(UIView *)view alignToLeftWithPadding:(CGFloat)padding {
     self.center = view.center;
     [self setFrameX:padding];
