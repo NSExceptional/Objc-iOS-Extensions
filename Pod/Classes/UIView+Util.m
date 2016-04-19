@@ -8,6 +8,8 @@
 
 #import "UIView+Util.h"
 
+#define roundToHalf(x) ((round(x * 2) / 2.f))
+
 @implementation UIView (Util)
 
 - (UIView *)subviewWithClass:(Class)classObject {
@@ -91,6 +93,8 @@
 - (void)centerYInView:(UIView *)view alignToLeftWithPadding:(CGFloat)padding {
     self.center = view.center;
     [self setFrameX:padding];
+    // Rounding
+    [self setFrameY:self.frame.origin.y];
 }
 
 - (void)centerYInView:(UIView *)view alignToRightWithPadding:(CGFloat)padding {
@@ -98,11 +102,37 @@
     CGFloat xpos = CGRectGetWidth(view.frame) - padding;
     xpos        -= CGRectGetWidth(self.frame);
     [self setFrameX:xpos];
+    // Rounding
+    [self setFrameY:self.frame.origin.y];
 }
+
+- (void)centerYInView:(UIView *)view centerXBetweenView:(UIView *)left andView:(UIView *)right {
+    NSParameterAssert(CGRectGetMaxX(left.frame) < CGRectGetMinX(right.frame));
+    [self centerYInView:view centerXBetween:CGRectGetMaxX(left.frame) and:CGRectGetMinX(right.frame)];
+}
+
+- (void)centerYInView:(UIView *)view centerXBetweenView:(UIView *)left and:(CGFloat)xright {
+    NSParameterAssert(CGRectGetMaxX(left.frame) < xright);
+    [self centerYInView:view centerXBetween:CGRectGetMaxX(left.frame) and:xright];
+}
+
+- (void)centerYInView:(UIView *)view centerXBetween:(CGFloat)xleft andView:(UIView *)right {
+    NSParameterAssert(xleft < CGRectGetMinX(right.frame));
+    [self centerYInView:view centerXBetween:xleft and:CGRectGetMinX(right.frame)];
+}
+
+- (void)centerYInView:(UIView *)view centerXBetween:(CGFloat)xleft and:(CGFloat)xright {
+    NSParameterAssert(xleft < xright);
+    self.center = view.center;
+    [self setFrameX:xleft + (xright - xleft)/2.f - CGRectGetWidth(self.frame)/2.f];
+}
+
 
 - (void)centerXInView:(UIView *)view alignToTopWithPadding:(CGFloat)padding {
     self.center = view.center;
     [self setFrameY:padding];
+    // Rounding
+    [self setFrameX:self.frame.origin.x];
 }
 
 - (void)centerXInView:(UIView *)view alignToBottomWithPadding:(CGFloat)padding {
@@ -110,6 +140,29 @@
     CGFloat ypos = CGRectGetHeight(view.frame) - padding;
     ypos        -= CGRectGetHeight(self.frame);
     [self setFrameY:ypos];
+    // Rounding
+    [self setFrameX:self.frame.origin.x];
+}
+
+- (void)centerXInView:(UIView *)view centerYBetweenView:(UIView *)above andView:(UIView *)below {
+    NSParameterAssert(CGRectGetMaxY(above.frame) < CGRectGetMinY(below.frame));
+    [self centerXInView:view centerYBetween:CGRectGetMaxY(above.frame) and:CGRectGetMinY(below.frame)];
+}
+
+- (void)centerXInView:(UIView *)view centerYBetweenView:(UIView *)above and:(CGFloat)ybottom {
+    NSParameterAssert(CGRectGetMaxY(above.frame) < ybottom);
+    [self centerXInView:view centerYBetween:CGRectGetMaxY(above.frame) and:ybottom];
+}
+
+- (void)centerXInView:(UIView *)view centerYBetween:(CGFloat)ytop andView:(UIView *)below {
+    NSParameterAssert(ytop < CGRectGetMinY(below.frame));
+    [self centerXInView:view centerYBetween:ytop and:CGRectGetMinY(below.frame)];
+}
+
+- (void)centerXInView:(UIView *)view centerYBetween:(CGFloat)ytop and:(CGFloat)ybottom {
+    NSParameterAssert(ytop < ybottom);
+    self.center = view.center;
+    [self setFrameY:(ytop + (ybottom - ytop)/2.f) - CGRectGetHeight(self.frame)/2.f];
 }
 
 - (NSArray *)allConstraintsInHierarchy {

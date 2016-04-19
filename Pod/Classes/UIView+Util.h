@@ -34,9 +34,17 @@ typedef NS_ENUM(NSUInteger, CGFramePart) {
 
 - (void)centerYInView:(UIView *)view alignToLeftWithPadding:(CGFloat)padding;
 - (void)centerYInView:(UIView *)view alignToRightWithPadding:(CGFloat)padding;
+- (void)centerYInView:(UIView *)view centerXBetweenView:(UIView *)left andView:(UIView *)right;
+- (void)centerYInView:(UIView *)view centerXBetweenView:(UIView *)view and:(CGFloat)xright;
+- (void)centerYInView:(UIView *)view centerXBetween:(CGFloat)xleft andView:(UIView *)view;
+- (void)centerYInView:(UIView *)view centerXBetween:(CGFloat)xleft and:(CGFloat)xright;
 
 - (void)centerXInView:(UIView *)view alignToTopWithPadding:(CGFloat)padding;
 - (void)centerXInView:(UIView *)view alignToBottomWithPadding:(CGFloat)padding;
+- (void)centerXInView:(UIView *)view centerYBetweenView:(UIView *)above andView:(UIView *)below;
+- (void)centerXInView:(UIView *)view centerYBetweenView:(UIView *)above and:(CGFloat)ybottom;
+- (void)centerXInView:(UIView *)view centerYBetween:(CGFloat)ytop andView:(UIView *)below;
+- (void)centerXInView:(UIView *)view centerYBetween:(CGFloat)ytop and:(CGFloat)ybottom;
 
 /** All constraints held by the view and its subviews. */
 - (NSArray *)allConstraintsInHierarchy;
